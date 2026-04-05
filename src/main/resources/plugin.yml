@@ -1,10 +1,10 @@
 name: BridgeFight
 version: 1.0.0
-main: id.hyperionx.bridgewars.Main
+main: id.hyperionx.bridgefight.Main
 api-version: 1.20
 authors: [Reyhan]
 description: A BridgeFight plugin for Zelvera Minecraft server.
-website: https://github.com/reyhan/bridgewars
+website: https://github.com/Hannzzzz/zelvera-bridgewars
 
 commands:
   bridgefight:

@@ -1,4 +1,4 @@
-package id.hyperionx.bridgewars;
+package id.hyperionx.bridgefight;
 
 import java.util.UUID;
 

@@ -1,4 +1,4 @@
-package id.hyperionx.bridgewars;
+package id.hyperionx.bridgefight;
 
 public enum GameState {
     WAITING,

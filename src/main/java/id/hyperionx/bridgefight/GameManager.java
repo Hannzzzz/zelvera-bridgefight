@@ -1,4 +1,4 @@
-package id.hyperionx.bridgewars;
+package id.hyperionx.bridgefight;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

@@ -1,36 +1,36 @@
 # BridgeFight Plugin
 
-A professional BridgeFight plugin for Zelvera MC.
+A polished BridgeFight plugin for Zelvera MC.
 
 ## Features
 
-- Team-based gameplay (2-4 teams)
-- Bridge building mechanics
-- Duel arenas and bridge combat
-- Player statistics tracking
-- Admin commands for management
-- Configurable arenas
+- Fast bridge combat with quick rounds
+- Duel-focused arena gameplay
+- Player stats tracking for wins, kills, deaths, and K/D
+- Admin tools for arena control and reloading
+- Arena creation from in-game location
+- Smooth PaperMC support with modern Bukkit API compatibility
 
 ## Installation
 
-1. Download the plugin JAR file
-2. Place it in the server's `plugins` folder
+1. Build the plugin JAR with Maven
+2. Place the JAR in your PaperMC server's `plugins` folder
 3. Restart the server
-4. Configure arenas using admin commands
+4. Configure arenas using the admin commands
 
 ## Commands
 
 ### Player Commands
 - `/bf join <arena>` - Join an arena
 - `/bf leave` - Leave the current game
-- `/bf stats` - View your statistics
+- `/bf stats` - View your match statistics
 - `/bf shop` - Open the shop (coming soon)
 
 ### Admin Commands
 - `/bfadmin start <arena>` - Force start an arena
 - `/bfadmin stop <arena>` - Stop an arena
 - `/bfadmin reload` - Reload arenas
-- `/bfadmin create <arena>` - Create a new arena
+- `/bfadmin create <arena>` - Create a new arena from your location
 - `/bfadmin list` - List all arenas
 
 ## Configuration
@@ -38,12 +38,12 @@ A professional BridgeFight plugin for Zelvera MC.
 Arenas are stored in `plugins/BridgeFight/arenas/`
 
 To create an arena:
-1. Use `/bfadmin create <name>` while standing where you want the lobby
-2. Edit the generated YAML file to set team spawns and nexus locations
+1. Run `/bfadmin create <name>` while standing in the lobby location
+2. Edit the generated arena data file if needed
 
 ## Building
 
-This plugin uses Maven for building.
+This plugin uses Maven.
 
 ```bash
 mvn clean package
@@ -53,15 +53,14 @@ The JAR will be in `target/BridgeFight-1.0.0.jar`
 
 ## Dependencies
 
-- Spigot 1.8.8 or higher
+- PaperMC 1.20.x or compatible
 - Java 8+
 
-## Troubleshooting
+## Notes
 
-- **Plugin not loading**: Check server logs for errors
-- **Commands not working**: Ensure you have the correct permissions
-- **Arena not found**: Use `/bfadmin list` to see available arenas
+- The plugin is built to run on PaperMC and is fully compatible with Bukkit-style servers.
+- If you want BridgeFight-specific behavior, use `/bf` and `/bfadmin` commands.
 
 ## License
 
-This plugin is provided as-is. Feel free to modify and distribute.
+This plugin is provided as-is and may be modified freely.
