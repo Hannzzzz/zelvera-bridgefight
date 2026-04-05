@@ -8,27 +8,27 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
+        // startup logic plugin
         getLogger().info("BridgeWars plugin enabled!");
 
-        // Initialize game manager
+        // initialize game manager
         gameManager = new GameManager(this);
 
-        // Register commands
+        //  registers commands
         getCommand("bridgewars").setExecutor(new BridgeWarsCommand(this));
         getCommand("bwadmin").setExecutor(new AdminCommand(this));
 
-        // Register events
+        // registers events
         getServer().getPluginManager().registerEvents(new GameListener(this), this);
 
-        // Load configurations
+        // loads configurations
         saveDefaultConfig();
         gameManager.loadArenas();
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        // plugin shutdown logic
         getLogger().info("BridgeWars plugin disabled!");
 
         if (gameManager != null) {
