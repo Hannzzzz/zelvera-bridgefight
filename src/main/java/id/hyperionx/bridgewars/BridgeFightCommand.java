@@ -5,11 +5,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class BridgeWarsCommand implements CommandExecutor {
+public class BridgeFightCommand implements CommandExecutor {
 
     private final Main plugin;
 
-    public BridgeWarsCommand(Main plugin) {
+    public BridgeFightCommand(Main plugin) {
         this.plugin = plugin;
     }
 
@@ -30,7 +30,7 @@ public class BridgeWarsCommand implements CommandExecutor {
         switch (args[0].toLowerCase()) {
             case "join":
                 if (args.length < 2) {
-                    player.sendMessage("§cUsage: /bw join <arena>");
+                    player.sendMessage("§cUsage: /bf join <arena>");
                     return true;
                 }
                 plugin.getGameManager().joinGame(player, args[1]);
@@ -63,10 +63,10 @@ public class BridgeWarsCommand implements CommandExecutor {
     }
 
     private void sendHelp(Player player) {
-        player.sendMessage("§6BridgeWars Commands:");
-        player.sendMessage("§7/bw join <arena> §f- Join an arena");
-        player.sendMessage("§7/bw leave §f- Leave the current game");
-        player.sendMessage("§7/bw stats §f- View your statistics");
-        player.sendMessage("§7/bw shop §f- Open the shop");
+        player.sendMessage("§6BridgeFight Commands:");
+        player.sendMessage("§7/bf join <arena> §f- Join an arena");
+        player.sendMessage("§7/bf leave §f- Leave the current game");
+        player.sendMessage("§7/bf stats §f- View your statistics");
+        player.sendMessage("§7/bf shop §f- Open the shop");
     }
 }

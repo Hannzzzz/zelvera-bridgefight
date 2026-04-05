@@ -1,12 +1,12 @@
-# BridgeWars Plugin
+# BridgeFight Plugin
 
-A professional BridgeWars plugin for Zelvera MC.
+A professional BridgeFight plugin for Zelvera MC.
 
 ## Features
 
 - Team-based gameplay (2-4 teams)
 - Bridge building mechanics
-- Nexus destruction objectives
+- Duel arenas and bridge combat
 - Player statistics tracking
 - Admin commands for management
 - Configurable arenas
@@ -21,24 +21,24 @@ A professional BridgeWars plugin for Zelvera MC.
 ## Commands
 
 ### Player Commands
-- `/bw join <arena>` - Join an arena
-- `/bw leave` - Leave the current game
-- `/bw stats` - View your statistics
-- `/bw shop` - Open the shop (coming soon)
+- `/bf join <arena>` - Join an arena
+- `/bf leave` - Leave the current game
+- `/bf stats` - View your statistics
+- `/bf shop` - Open the shop (coming soon)
 
 ### Admin Commands
-- `/bwadmin start <arena>` - Force start an arena
-- `/bwadmin stop <arena>` - Stop an arena
-- `/bwadmin reload` - Reload arenas
-- `/bwadmin create <arena>` - Create a new arena
-- `/bwadmin list` - List all arenas
+- `/bfadmin start <arena>` - Force start an arena
+- `/bfadmin stop <arena>` - Stop an arena
+- `/bfadmin reload` - Reload arenas
+- `/bfadmin create <arena>` - Create a new arena
+- `/bfadmin list` - List all arenas
 
 ## Configuration
 
-Arenas are stored in `plugins/BridgeWars/arenas/`
+Arenas are stored in `plugins/BridgeFight/arenas/`
 
 To create an arena:
-1. Use `/bwadmin create <name>` while standing where you want the lobby
+1. Use `/bfadmin create <name>` while standing where you want the lobby
 2. Edit the generated YAML file to set team spawns and nexus locations
 
 ## Building
@@ -49,7 +49,7 @@ This plugin uses Maven for building.
 mvn clean package
 ```
 
-The JAR will be in `target/BridgeWars-1.0.0.jar`
+The JAR will be in `target/BridgeFight-1.0.0.jar`
 
 ## Dependencies
 
@@ -60,7 +60,7 @@ The JAR will be in `target/BridgeWars-1.0.0.jar`
 
 - **Plugin not loading**: Check server logs for errors
 - **Commands not working**: Ensure you have the correct permissions
-- **Arena not found**: Use `/bwadmin list` to see available arenas
+- **Arena not found**: Use `/bfadmin list` to see available arenas
 
 ## License
 

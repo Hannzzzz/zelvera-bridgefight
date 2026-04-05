@@ -15,7 +15,7 @@ public class AdminCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!sender.hasPermission("bridgewars.admin")) {
+        if (!sender.hasPermission("bridgefight.admin")) {
             sender.sendMessage("§cYou don't have permission to use this command!");
             return true;
         }
@@ -28,7 +28,7 @@ public class AdminCommand implements CommandExecutor {
         switch (args[0].toLowerCase()) {
             case "start":
                 if (args.length < 2) {
-                    sender.sendMessage("§cUsage: /bwadmin start <arena>");
+                    sender.sendMessage("§cUsage: /bfadmin start <arena>");
                     return true;
                 }
                 Arena arena = plugin.getGameManager().getArena(args[1]);
@@ -41,7 +41,7 @@ public class AdminCommand implements CommandExecutor {
                 break;
             case "stop":
                 if (args.length < 2) {
-                    sender.sendMessage("§cUsage: /bwadmin stop <arena>");
+                    sender.sendMessage("§cUsage: /bfadmin stop <arena>");
                     return true;
                 }
                 arena = plugin.getGameManager().getArena(args[1]);
@@ -58,7 +58,7 @@ public class AdminCommand implements CommandExecutor {
                 break;
             case "create":
                 if (args.length < 2) {
-                    sender.sendMessage("§cUsage: /bwadmin create <arena>");
+                    sender.sendMessage("§cUsage: /bfadmin create <arena>");
                     return true;
                 }
                 if (!(sender instanceof Player)) {
@@ -85,11 +85,11 @@ public class AdminCommand implements CommandExecutor {
     }
 
     private void sendHelp(CommandSender sender) {
-        sender.sendMessage("§6BridgeWars Admin Commands:");
-        sender.sendMessage("§7/bwadmin start <arena> §f- Force start an arena");
-        sender.sendMessage("§7/bwadmin stop <arena> §f- Stop an arena");
-        sender.sendMessage("§7/bwadmin reload §f- Reload arenas");
-        sender.sendMessage("§7/bwadmin create <arena> §f- Create a new arena");
-        sender.sendMessage("§7/bwadmin list §f- List all arenas");
+        sender.sendMessage("§6BridgeFight Admin Commands:");
+        sender.sendMessage("§7/bfadmin start <arena> §f- Force start an arena");
+        sender.sendMessage("§7/bfadmin stop <arena> §f- Stop an arena");
+        sender.sendMessage("§7/bfadmin reload §f- Reload arenas");
+        sender.sendMessage("§7/bfadmin create <arena> §f- Create a new arena");
+        sender.sendMessage("§7/bfadmin list §f- List all arenas");
     }
 }

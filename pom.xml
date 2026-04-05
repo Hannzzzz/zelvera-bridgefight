@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>id.hyperionx</groupId>
-    <artifactId>bridgewars</artifactId>
+    <artifactId>bridgefight</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>BridgeWars Plugin</name>
-    <description>A professional BridgeWars plugin for Hypixel-styled servers</description>
+    <name>BridgeFight Plugin</name>
+    <description>A professional BridgeFight plugin for Hypixel-styled servers</description>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

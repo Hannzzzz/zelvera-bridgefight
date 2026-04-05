@@ -9,14 +9,14 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         // startup logic plugin
-        getLogger().info("BridgeWars plugin enabled!");
+        getLogger().info("BridgeFight plugin enabled!");
 
         // initialize game manager
         gameManager = new GameManager(this);
 
-        //  registers commands
-        getCommand("bridgewars").setExecutor(new BridgeWarsCommand(this));
-        getCommand("bwadmin").setExecutor(new AdminCommand(this));
+        // registers commands
+        getCommand("bridgefight").setExecutor(new BridgeFightCommand(this));
+        getCommand("bfadmin").setExecutor(new AdminCommand(this));
 
         // registers events
         getServer().getPluginManager().registerEvents(new GameListener(this), this);
@@ -29,7 +29,7 @@ public class Main extends JavaPlugin {
     @Override
     public void onDisable() {
         // plugin shutdown logic
-        getLogger().info("BridgeWars plugin disabled!");
+        getLogger().info("BridgeFight plugin disabled!");
 
         if (gameManager != null) {
             gameManager.shutdown();
