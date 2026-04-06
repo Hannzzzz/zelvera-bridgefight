@@ -10,6 +10,23 @@ A polished BridgeFight plugin for Zelvera MC.
 - Admin tools for arena control and reloading
 - Arena creation from in-game location
 - Smooth PaperMC support with modern Bukkit API compatibility
+- **Advanced UI**: Floating holograms in lobbies (requires HolographicDisplays)
+- **Interactive NPCs**: Clickable NPCs for mode selection and teleportation (requires Citizens)
+- **Mode Menus**: Inventory-based selection for different BridgeFight modes
+
+## Code Structure
+
+- **Main.java**: Plugin entry point and command registration
+- **GameManager.java**: Manages arenas and player sessions
+- **Arena.java**: Handles individual arena logic and LobbyManager integration
+- **BridgeFightCommand.java**: Player command handler
+- **AdminCommand.java**: Admin command handler
+- **GameListener.java**: Event handling for gameplay
+- **LobbyManager.java**: Manages floating holograms and clickable NPCs (commented out until plugins are installed)
+- **MenuListener.java**: Processes inventory clicks for mode selection
+- **PlayerData.java**: Player statistics
+- **Team.java**: Team management
+- **GameState.java**: Arena state enumeration
 
 ## Installation
 
@@ -55,11 +72,25 @@ The JAR will be in `target/BridgeFight-1.0.0.jar`
 
 - PaperMC 1.20.x or compatible
 - Java 8+
+- **Optional for Advanced Features**:
+  - HolographicDisplays (for floating lobby holograms)
+  - Citizens (for clickable NPCs)
+
+## Enabling Advanced Features
+
+To activate holograms and NPCs:
+
+1. Install HolographicDisplays and Citizens plugins on your server
+2. Uncomment the dependencies in `pom.xml`
+3. Uncomment the hologram/NPC code in `LobbyManager.java`
+4. Uncomment the event registration in `Main.java`
+5. Rebuild and redeploy the plugin
 
 ## Notes
 
 - The plugin is built to run on PaperMC and is fully compatible with Bukkit-style servers.
 - If you want BridgeFight-specific behavior, use `/bf` and `/bfadmin` commands.
+- Advanced UI features enhance the lobby experience but are not required for core gameplay.
 
 ## License
 
