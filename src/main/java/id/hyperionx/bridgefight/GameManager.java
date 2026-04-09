@@ -31,7 +31,7 @@ public class GameManager {
             for (File file : files) {
                 String arenaName = file.getName().replace(".yml", "");
                 FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-                Arena arena = new Arena(arenaName, plugin, config);
+                Arena arena = new Arena(arenaName, plugin, this, config);
                 arenas.put(arenaName, arena);
             }
         }

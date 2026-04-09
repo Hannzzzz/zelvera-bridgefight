@@ -22,12 +22,14 @@ import java.util.function.Consumer;
 public class LobbyManager {
 
     private final JavaPlugin plugin;
+    private final GameManager gameManager;
     // private Hologram lobbyHologram;
     // private NPC modeSelectorNPC;
     // private NPC backToSpawnNPC;
 
-    public LobbyManager(JavaPlugin plugin, Location lobbyLocation) {
+    public LobbyManager(JavaPlugin plugin, GameManager gameManager, Location lobbyLocation) {
         this.plugin = plugin;
+        this.gameManager = gameManager;
         // setupHologram(lobbyLocation);
         // setupNPCs(lobbyLocation);
     }
@@ -56,10 +58,66 @@ public class LobbyManager {
     // }
 
     private void openModeMenu(Player player) {
-        Inventory menu = Bukkit.createInventory(null, 9, "§6Select BridgeFight Mode");
-        menu.setItem(0, createItem(Material.DIAMOND_SWORD, "§bClassic Duel", "§71v1 bridge combat"));
-        menu.setItem(2, createItem(Material.BOW, "§eArcher Duel", "§7Ranged bridge fights"));
-        menu.setItem(4, createItem(Material.TNT, "§cExplosive Mode", "§7TNT-enabled chaos"));
+        openGameModeMenu(player);
+    }
+
+    // ===== MAIN LOBBY MENU =====
+    public void openMainMenu(Player player) {
+        Inventory menu = Bukkit.createInventory(null, 9, "§6§lBridgeFight Lobby");
+        menu.setItem(2, createItem(Material.DIAMOND_SWORD, "§b§lPlay", "§7Click to select a game mode"));
+        menu.setItem(4, createItem(Material.ITEM_FRAME, "§e§lSettings", "§7Adjust your preferences"));
+        menu.setItem(6, createItem(Material.BOOK, "§c§lStatistics", "§7View your stats"));
+        menu.setItem(8, createItem(Material.BARRIER, "§7§lQuit", "§7Close this menu"));
+        player.openInventory(menu);
+    }
+
+    // ===== GAME MODE SELECTION MENU =====
+    public void openGameModeMenu(Player player) {
+        Inventory menu = Bukkit.createInventory(null, 9, "§b§lSelect Game Mode");
+        menu.setItem(0, createItem(Material.DIAMOND_SWORD, "§b§lClassic Duel", "§71v1 bridge combat", "§7Fast rounds, skill-based"));
+        menu.setItem(2, createItem(Material.BOW, "§e§lArcher Duel", "§7Ranged bridge fights", "§7Long-range combat"));
+        menu.setItem(4, createItem(Material.TNT, "§c§lExplosive Mode", "§7TNT-enabled chaos", "§7Explosive gameplay"));
+        menu.setItem(6, createItem(Material.WHITE_WOOL, "§a§lTeam Battle", "§7Team-based competition", "§7Coordinate with teammates"));
+        menu.setItem(8, createItem(Material.ARROW, "§7§lBack", "§7Return to main menu"));
+        player.openInventory(menu);
+    }
+
+    // ===== SETTINGS MENU =====
+    public void openSettingsMenu(Player player) {
+        PlayerData data = gameManager.getPlayerData(player.getUniqueId());
+        Inventory menu = Bukkit.createInventory(null, 9, "§e§lSettings");
+
+        // Visibility toggle
+        String visibilityStatus = data.isVisible() ? "§a✓ ON" : "§c✗ OFF";
+        menu.setItem(0, createItem(Material.ENDER_EYE, "§6§lPlayer Visibility", "§7Status: " + visibilityStatus, "§7Click to toggle"));
+
+        // Difficulty placeholder
+        menu.setItem(2, createItem(Material.REDSTONE, "§6§lDifficulty", "§7Coming soon"));
+
+        // Sound settings placeholder
+        menu.setItem(4, createItem(Material.NOTE_BLOCK, "§6§lSound Settings", "§7Coming soon"));
+
+        // Back button
+        menu.setItem(8, createItem(Material.ARROW, "§7§lBack", "§7Return to main menu"));
+        player.openInventory(menu);
+    }
+
+    // ===== STATS MENU =====
+    public void openStatsMenu(Player player) {
+        PlayerData data = gameManager.getPlayerData(player.getUniqueId());
+        Inventory menu = Bukkit.createInventory(null, 9, "§c§lYour Statistics");
+
+        // Create stat items - these are decorative display items
+        menu.setItem(0, createItem(Material.GOLD_BLOCK, "§6§lWins", "§f" + data.getWins()));
+        menu.setItem(1, createItem(Material.IRON_BLOCK, "§7§lLosses", "§f" + data.getLosses()));
+        menu.setItem(3, createItem(Material.REDSTONE, "§c§lDeaths", "§f" + data.getDeaths()));
+        menu.setItem(4, createItem(Material.EMERALD, "§a§lKills", "§f" + data.getKills()));
+        menu.setItem(5, createItem(Material.DIAMOND, "§b§lK/D Ratio", "§f" + String.format("%.2f", data.getKDRatio())));
+        menu.setItem(6, createItem(Material.BEACON, "§e§lWin Rate", "§f" + String.format("%.1f", data.getWinRate()) + "%"));
+        menu.setItem(7, createItem(Material.ENCHANTED_BOOK, "§5§lGames Played", "§f" + data.getGamesPlayed()));
+
+        // Back button
+        menu.setItem(8, createItem(Material.ARROW, "§7§lBack", "§7Return to main menu"));
         player.openInventory(menu);
     }
 
@@ -73,6 +131,15 @@ public class LobbyManager {
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(name);
         meta.setLore(java.util.Arrays.asList(lore));
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    private ItemStack createItem(Material material, String name, String... lores) {
+        ItemStack item = new ItemStack(material);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(name);
+        meta.setLore(java.util.Arrays.asList(lores));
         item.setItemMeta(meta);
         return item;
     }

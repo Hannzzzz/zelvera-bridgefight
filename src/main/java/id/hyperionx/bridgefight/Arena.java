@@ -22,23 +22,31 @@ public class Arena {
     private int minPlayers = 2;
     private int countdown = 30;
     private final Main plugin;
+    private final GameManager gameManager;
     private LobbyManager lobbyManager;
 
-    public Arena(String name, FileConfiguration config) {
+    public Arena(String name, Main plugin2) {
         this.name = name;
         this.plugin = null; // Will be set when created
-        loadFromConfig(config);
+        this.gameManager = null;
+        loadFromConfig(plugin2);
+    }
+
+    private void loadFromConfig(Main plugin2) {
+        throw new UnsupportedOperationException("Unimplemented method 'loadFromConfig'");
     }
 
     public Arena(String name, Main plugin, FileConfiguration config) {
         this.name = name;
         this.plugin = plugin;
+        this.gameManager = null;
         loadFromConfig(config);
     }
 
-    public Arena(String name, Main plugin) {
+    public Arena(String name, Main plugin, GameManager gameManager) {
         this.name = name;
         this.plugin = plugin;
+        this.gameManager = gameManager;
         // Default teams
         teams.add(new Team("Red", ChatColor.RED, (byte)14));
         teams.add(new Team("Blue", ChatColor.BLUE, (byte)11));
@@ -46,11 +54,18 @@ public class Arena {
         teams.add(new Team("Yellow", ChatColor.YELLOW, (byte)4));
     }
 
+    public Arena(String name, Main plugin, GameManager gameManager, FileConfiguration config) {
+        this.name = name;
+        this.plugin = plugin;
+        this.gameManager = gameManager;
+        loadFromConfig(config);
+    }
+
     private void loadFromConfig(FileConfiguration config) {
         // Load locations, teams, etc.
         // Implementation omitted for brevity
         if (lobbyLocation != null) {
-            this.lobbyManager = new LobbyManager(plugin, lobbyLocation);
+            this.lobbyManager = new LobbyManager(plugin, gameManager, lobbyLocation);
         }
     }
 
@@ -187,9 +202,9 @@ public class Arena {
     private void giveKit(Player player) {
         player.getInventory().clear();
         // Basic kit: sword, pickaxe, blocks
-        player.getInventory().addItem(new org.bukkit.inventory.ItemStack(Material.WOOD_SWORD));
-        player.getInventory().addItem(new org.bukkit.inventory.ItemStack(Material.WOOD_PICKAXE));
-        player.getInventory().addItem(new org.bukkit.inventory.ItemStack(Material.WOOL, 64));
+        player.getInventory().addItem(new org.bukkit.inventory.ItemStack(Material.WOODEN_SWORD));
+        player.getInventory().addItem(new org.bukkit.inventory.ItemStack(Material.WOODEN_PICKAXE));
+        player.getInventory().addItem(new org.bukkit.inventory.ItemStack(Material.WHITE_WOOL, 64));
         player.getInventory().setHelmet(new org.bukkit.inventory.ItemStack(Material.LEATHER_HELMET));
         player.getInventory().setChestplate(new org.bukkit.inventory.ItemStack(Material.LEATHER_CHESTPLATE));
         player.getInventory().setLeggings(new org.bukkit.inventory.ItemStack(Material.LEATHER_LEGGINGS));

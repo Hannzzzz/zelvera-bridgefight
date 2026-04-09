@@ -10,6 +10,7 @@ public class PlayerData {
     private int kills = 0;
     private int deaths = 0;
     private int gamesPlayed = 0;
+    private boolean visible = true; // Player visibility toggle
 
     public PlayerData(UUID uuid) {
         this.uuid = uuid;
@@ -63,5 +64,17 @@ public class PlayerData {
 
     public double getWinRate() {
         return gamesPlayed == 0 ? 0 : (double) wins / gamesPlayed * 100;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
+    public void toggleVisibility() {
+        this.visible = !this.visible;
     }
 }
