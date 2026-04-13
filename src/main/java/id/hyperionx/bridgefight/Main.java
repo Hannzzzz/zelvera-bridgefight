@@ -2,6 +2,10 @@ package id.hyperionx.bridgefight;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import id.hyperionx.bridgefight.listeners.GameListener;
+import id.hyperionx.bridgefight.listeners.InteractListener;
+import id.hyperionx.bridgefight.listeners.PlayerJoinListener;
+
 public class Main extends JavaPlugin {
 
     private GameManager gameManager;
@@ -26,6 +30,12 @@ public class Main extends JavaPlugin {
         // if (Bukkit.getPluginManager().isPluginEnabled("Citizens")) {
         //     CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(LobbyManager.ClickableTrait.class));
         // }
+
+        //registers listeners
+        GameManager gameManager = new GameManager(this);
+        ArenaManager arenaManager = new ArenaManager(gameManager);
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+        getServer().getPluginManager().registerEvents(new InteractListener(arenaManager), this);
 
         // loads configurations
         saveDefaultConfig();

@@ -13,7 +13,6 @@ import java.util.*;
 public class Arena {
 
     private final String name;
-    private GameState state = GameState.WAITING;
     private final List<Team> teams = new ArrayList<>();
     private final Set<UUID> players = new HashSet<>();
     private final Map<UUID, Team> playerTeams = new HashMap<>();
@@ -24,6 +23,15 @@ public class Arena {
     private final Main plugin;
     private final GameManager gameManager;
     private LobbyManager lobbyManager;
+
+    private GameState state;
+    public GameState getState1() {
+        return state;
+    }
+
+    public void setState(GameState state) {
+        this.state = state;  
+    }
 
     public Arena(String name, Main plugin2) {
         this.name = name;
@@ -88,7 +96,7 @@ public class Arena {
     }
 
     public void addPlayer(Player player) {
-        if (state != GameState.WAITING) {
+        if (state != GameState.LOBBY) {
             player.sendMessage("§cGame is already in progress!");
             return;
         }
@@ -121,7 +129,7 @@ public class Arena {
         player.getInventory().clear();
         player.setGameMode(GameMode.SURVIVAL);
 
-        if (players.size() < minPlayers && state == GameState.STARTING) {
+        if (players.size() < minPlayers && state == GameState.STARTING_COUNTDOWN) {
             stopCountdown();
         }
 
@@ -138,7 +146,7 @@ public class Arena {
     }
 
     private void startCountdown() {
-        state = GameState.STARTING;
+        state = GameState.STARTING_COUNTDOWN;
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -161,7 +169,7 @@ public class Arena {
     }
 
     private void stopCountdown() {
-        state = GameState.WAITING;
+        state = GameState.LOBBY;
         countdown = 30;
         broadcast("§cNot enough players! Countdown stopped.");
     }
@@ -185,7 +193,7 @@ public class Arena {
     }
 
     public void stopGame() {
-        state = GameState.WAITING;
+        state = GameState.LOBBY;
         countdown = 30;
 
         for (UUID uuid : players) {

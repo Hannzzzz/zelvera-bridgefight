@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,6 +50,47 @@ public class GameManager {
         }
     }
 
+    public void tryStartGame(Arena arena) {
+        if (arena.getPlayers().size() >= 2) {
+            startCountdown(arena);
+        }
+    }
+
+    public void startCountdown(Arena arena) {
+        arena.setState(GameState.STARTING_COUNTDOWN);
+
+        new BukkitRunnable() {
+            int time = 10;
+            public void run() {
+                if (time == 0) {
+                    startGame(arena);
+                    cancel();
+                    return;
+                }
+
+                for (UUID uuid : arena.getPlayers()) {
+                    Player p = Bukkit.getPlayer(uuid);
+                    if (p != null) {
+                        p.sendMessage("Starting in " + time + " seconds...");
+                    }
+                }
+                
+                time--;
+            }
+        }.runTaskTimer(plugin, 0, 20);
+    }
+
+    public void startGame(Arena arena) {
+        arena.setState(GameState.IN_PROGRESS);
+        // Teleport players, give kits, etc.
+        for (UUID uuid : arena.getPlayers()) {
+            Player p = Bukkit.getPlayer(uuid);
+            if (p != null) {
+                p.sendMessage("Game started!");
+            }
+        }
+    }
+
     public Arena getArena(String name) {
         return arenas.get(name);
     }
@@ -82,7 +124,7 @@ public class GameManager {
 
     public Arena findAvailableArena() {
         for (Arena arena : arenas.values()) {
-            if (arena.getState() == GameState.WAITING) {
+            if (arena.getState() == GameState.LOBBY) {
                 return arena;
             }
         }

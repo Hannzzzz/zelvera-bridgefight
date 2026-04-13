@@ -1,8 +1,8 @@
 package id.hyperionx.bridgefight;
 
 public enum GameState {
-    WAITING,
-    STARTING,
+    LOBBY,
+    STARTING_COUNTDOWN,
     IN_PROGRESS,
     ENDING
 }

@@ -1,6 +1,6 @@
 # BridgeFight Plugin
 
-A professional BridgeFight minigame plugin for Minecraft servers. Supports Minecraft 1.8.8+ with Java 8 compatibility.
+A professional BridgeFight minigame plugin made for Zelvera Network. Supports Minecraft 1.8.8+ with Java 8 compatibility.
 
 ## Features
 
@@ -79,7 +79,7 @@ This plugin uses Maven for building and dependency management.
 
 ### Requirements
 - Maven 3.8+
-- Java 8 JDK
+- Java 8+ JDK
 
 ### Build Command
 ```bash
@@ -87,8 +87,8 @@ mvn clean package
 ```
 
 ### Output
-- **Compiled JAR**: `target/bridgefight-1.0.0.jar`
-- **Original JAR**: `target/original-bridgefight-1.0.0.jar`
+- **Compiled JAR**: `target/bridgefight-1.0.1.jar`
+- **Original JAR**: `target/original-bridgefight-1.0.1.jar`
 
 The shaded JAR (`bridgefight-1.0.0.jar`) is ready for deployment on your server.
 
