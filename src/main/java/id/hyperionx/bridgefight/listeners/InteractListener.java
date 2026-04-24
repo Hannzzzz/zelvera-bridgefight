@@ -24,5 +24,9 @@ public void onClick(PlayerInteractEvent e) {
         arenaManager.joinArena(player, "arena1");
 
         }
+    if (e.getItem().getType() == Material.COMPASS) {
+    e.setCancelled(true);
+    arenaManager.joinArena(player, "arena1");
+}
     }
 }

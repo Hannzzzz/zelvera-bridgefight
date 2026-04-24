@@ -1,7 +1,7 @@
 package id.hyperionx.bridgefight;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -18,8 +18,18 @@ public class GameManager {
     private final Map<UUID, PlayerData> playerData = new HashMap<>();
 
     public GameManager(Main plugin) {
-        this.plugin = plugin;
+    this.plugin = plugin;
+
+    FileConfiguration config = plugin.getConfig();
+
+    ConfigurationSection arenasSection = config.getConfigurationSection("arenas");
+
+    for (String arenaName : arenasSection.getKeys(false)) {
+        Arena arena = new Arena(arenaName, plugin, this, arenasSection.getConfigurationSection(arenaName));
+
+        arenas.put(arenaName, arena);
     }
+}
 
     public void loadArenas() {
         File arenasFolder = new File(plugin.getDataFolder(), "arenas");

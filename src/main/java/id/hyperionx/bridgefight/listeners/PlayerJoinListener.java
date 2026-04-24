@@ -1,6 +1,6 @@
 package id.hyperionx.bridgefight.listeners;
 
-import java.net.http.WebSocket.Listener;
+//import java.net.http.WebSocket.Listener;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -22,6 +22,7 @@ public void onJoin(PlayerJoinEvent e) {
     ItemStack item = new ItemStack(Material.COMPASS);
     ItemMeta meta = item.getItemMeta();
     meta.setDisplayName("§aSelect Mode");
+    player.sendMessage("§aWelcome to BridgeFight!");
     item.setItemMeta(meta);
 
     player.getInventory().setItem(0,item);

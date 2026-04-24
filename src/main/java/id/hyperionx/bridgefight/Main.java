@@ -1,5 +1,6 @@
 package id.hyperionx.bridgefight;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import id.hyperionx.bridgefight.listeners.GameListener;
@@ -12,11 +13,13 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        saveDefaultConfig();
         // startup logic plugin
         getLogger().info("BridgeFight plugin enabled!");
 
-        // initialize game manager
-        gameManager = new GameManager(this);
+
+        GameManager gameManager = new GameManager(this); // Initialize game manager
+        ArenaManager arenaManager = new ArenaManager(gameManager);
 
         // registers commands
         getCommand("bridgefight").setExecutor(new BridgeFightCommand(this));
@@ -26,19 +29,20 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new GameListener(this), this);
         // getServer().getPluginManager().registerEvents(new MenuListener(), this); // Uncomment when Citizens is installed
 
-        // Register Citizens trait if available
-        // if (Bukkit.getPluginManager().isPluginEnabled("Citizens")) {
-        //     CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(LobbyManager.ClickableTrait.class));
-        // }
-
-        //registers listeners
-        GameManager gameManager = new GameManager(this);
-        ArenaManager arenaManager = new ArenaManager(gameManager);
+        // registers listeners
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         getServer().getPluginManager().registerEvents(new InteractListener(arenaManager), this);
 
+        // Register Citizens trait if available
+         if (Bukkit.getPluginManager().isPluginEnabled("Citizens")) {
+             try {
+                 Class.forName("net.citizensnpcs.api.CitizensAPI").getMethod("getTraitFactory").invoke(null);
+             } catch (Exception e) {
+                 getLogger().warning("Failed to register Citizens trait: " + e.getMessage());
+             }
+         }
+
         // loads configurations
-        saveDefaultConfig();
         gameManager.loadArenas();
     }
 

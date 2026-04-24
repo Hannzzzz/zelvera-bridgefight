@@ -1,6 +1,7 @@
 package id.hyperionx.bridgefight;
 
 import org.bukkit.*;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -25,13 +26,31 @@ public class Arena {
     private LobbyManager lobbyManager;
 
     private GameState state;
-    public GameState getState1() {
-        return state;
+
+    private Location redSpawn;
+    private Location blueSpawn;
+
+    public void setRedSpawn(Location loc) {
+        this.redSpawn = loc;
+    }
+
+    public void setBlueSpawn(Location loc) {
+        this.blueSpawn = loc;
     }
 
     public void setState(GameState state) {
         this.state = state;  
     }
+
+    public Location parseLocation(String loc, World world) {
+    String[] parts = loc.split(",");
+
+    double x = Double.parseDouble(parts[0]);
+    double y = Double.parseDouble(parts[1]);
+    double z = Double.parseDouble(parts[2]);
+
+    return new Location(world, x, y, z);
+}
 
     public Arena(String name, Main plugin2) {
         this.name = name;
@@ -67,6 +86,12 @@ public class Arena {
         this.plugin = plugin;
         this.gameManager = gameManager;
         loadFromConfig(config);
+    }
+
+    public Arena(String arenaName, Main plugin2, GameManager gameManager2, ConfigurationSection configurationSection) {
+        this.name = arenaName;
+        this.plugin = plugin2;
+        this.gameManager = gameManager2;
     }
 
     private void loadFromConfig(FileConfiguration config) {
@@ -152,9 +177,11 @@ public class Arena {
             public void run() {
                 if (countdown <= 0) {
                     startGame();
+
                     cancel();
                     return;
                 }
+            
 
                 if (players.size() < minPlayers) {
                     stopCountdown();
@@ -175,22 +202,30 @@ public class Arena {
     }
 
     private void startGame() {
-        state = GameState.IN_PROGRESS;
-        broadcast("§aGame started! Good luck!");
+    state = GameState.IN_PROGRESS;
+    broadcast("§aGame started! Good luck!");
 
-        for (UUID uuid : players) {
-            Player player = Bukkit.getPlayer(uuid);
-            if (player != null) {
-                // Teleport to team spawn
-                Team team = playerTeams.get(uuid);
-                if (team != null && team.getSpawnLocation() != null) {
-                    player.teleport(team.getSpawnLocation());
-                }
-                // Give kit
-                giveKit(player);
+    for (UUID uuid : players) {
+        Player player = Bukkit.getPlayer(uuid);
+        if (player == null) continue;
+
+        Team team = playerTeams.get(uuid);
+        if (team == null) continue;
+
+        if (team.getName().equalsIgnoreCase("Red")) {
+            if (redSpawn != null) {
+                player.teleport(redSpawn);
+            }
+        } else {
+            if (blueSpawn != null) {
+                player.teleport(blueSpawn);
             }
         }
+
+        giveKit(player);
     }
+}
+    
 
     public void stopGame() {
         state = GameState.LOBBY;
